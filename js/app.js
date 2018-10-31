@@ -1,7 +1,5 @@
 console.log("DOM loaded");
-
 let openCards = [];
-
 const cards = [
 	"fa-diamond", "fa-diamond",
 	"fa-paper-plane-o", "fa-paper-plane-o",
@@ -53,32 +51,31 @@ function shuffle(array) {
 
     return array;
 }
-let allCards = document.querySelectorAll(".card");
+
+const allCards = document.querySelectorAll(".card");
 
 allCards.forEach(function(card) {
 	card.addEventListener("click", () => {
-		console.log("clicked")
 		if (!card.classList.contains("open") && !card.classList.contains("show") && !card.classList.contains("match")) {
 		openCards.push(card);
 		card.classList.add("open", "show");
 
 		
 		if (openCards.length == 2) {
-			//check for match
-			// if (openCards[0].dataset.card == openCards[1].dataset.card) {
-			// 	console.log("it's a match!")
-			// }
-
-
-			// if cards don't match, close
-			setTimeout(function() {
-				openCards.forEach(function(card) {
-					card.classList.remove("open", "show");
-				});
-				openCards = [];
-			}, 1000);
+			//check for match, if matches leave shown
+			if (openCards[0].dataset.card == openCards[1].dataset.card) {
+				openCards[0].classList.add("open", "show", "match");
+				openCards[1].classList.add("open", "show", "match");
+			} else {
+				// if cards don't match, close
+				setTimeout(function() {
+					openCards.forEach(function(card) {
+						card.classList.remove("open", "show");
+					});
+					openCards = [];
+				}, 1000);
+			}}
 		}
-	}
 	});
 });
 
