@@ -1,5 +1,8 @@
 console.log("DOM loaded");
 let openCards = [];
+let moves = 0;
+const moveCounter = document.querySelector(".moves");
+const restart = document.getElementsByClassName("fa-repeat")[0];
 const cards = [
 	"fa-diamond", "fa-diamond",
 	"fa-paper-plane-o", "fa-paper-plane-o",
@@ -32,6 +35,9 @@ function startGame() {
 	let cardHTML = shuffle(cards).map(function(card) {
 		return makeCard(card);
 	});
+	moves = 0;
+	moveCounter.innerText = moves;
+
 	deck.innerHTML = cardHTML.join("");
 }
 
@@ -59,33 +65,29 @@ allCards.forEach(function(card) {
 		if (!card.classList.contains("open") && !card.classList.contains("show") && !card.classList.contains("match")) {
 		openCards.push(card);
 		card.classList.add("open", "show");
-
-		
 		if (openCards.length == 2) {
-			//check for match, if matches leave shown
+			// check for match, if matches leave shown
 			if (openCards[0].dataset.card == openCards[1].dataset.card) {
 				openCards[0].classList.add("open", "show", "match");
 				openCards[1].classList.add("open", "show", "match");
+				openCards = [];
 			} else {
-				// if cards don't match, close
+				// if cards don't match, flip cards back over
 				setTimeout(function() {
 					openCards.forEach(function(card) {
 						card.classList.remove("open", "show");
 					});
 					openCards = [];
 				}, 1000);
-			}}
+			}
+			moves += 1;
+			moveCounter.innerText = moves;
+		}
 		}
 	});
 });
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+//restart button restarts game
+restart.addEventListener("click", () => {
+	startGame();
+})
