@@ -62,28 +62,30 @@ const allCards = document.querySelectorAll(".card");
 
 allCards.forEach(function(card) {
 	card.addEventListener("click", () => {
-		if (!card.classList.contains("open") && !card.classList.contains("show") && !card.classList.contains("match")) {
-		openCards.push(card);
-		card.classList.add("open", "show");
-		if (openCards.length == 2) {
-			// check for match, if matches leave shown
-			if (openCards[0].dataset.card == openCards[1].dataset.card) {
-				openCards[0].classList.add("open", "show", "match");
-				openCards[1].classList.add("open", "show", "match");
-				openCards = [];
-			} else {
-				// if cards don't match, flip cards back over
-				setTimeout(function() {
-					openCards.forEach(function(card) {
-						card.classList.remove("open", "show");
-					});
+		// only allows two cards to be opened at a time
+		if (openCards.length < 2) {
+			if (!card.classList.contains("open") && !card.classList.contains("show") && !card.classList.contains("match")) {
+			openCards.push(card);
+			card.classList.add("open", "show");
+			if (openCards.length == 2) {
+				// check for match, if matches leave shown
+				if (openCards[0].dataset.card == openCards[1].dataset.card) {
+					openCards[0].classList.add("open", "show", "match");
+					openCards[1].classList.add("open", "show", "match");
 					openCards = [];
-				}, 1000);
+				} else {
+					// if cards don't match, flip cards back over
+					setTimeout(function() {
+						openCards.forEach(function(card) {
+							card.classList.remove("open", "show");
+						});
+						openCards = [];
+					}, 1000);
+				}
+				moves += 1;
+				moveCounter.innerText = moves;
 			}
-			moves += 1;
-			moveCounter.innerText = moves;
-		}
-		}
+		}}
 	});
 });
 
