@@ -52,6 +52,7 @@ function startGame() {
 	moveCounter.innerText = moves;
 	showTime();
 	deck.innerHTML = cardHTML.join("");
+	dealCards();
 }
 
 startGame();
@@ -72,6 +73,8 @@ function shuffle(array) {
 // not sure why the game only works if this var is NOT listed at the top
 const allCards = document.querySelectorAll(".card");
 
+function dealCards() {
+	const allCards = document.querySelectorAll(".card");
 allCards.forEach(function(card) {
 	card.addEventListener("click", () => {
 		// only allows two cards to be opened at a time
@@ -101,6 +104,7 @@ allCards.forEach(function(card) {
 		}}
 	});
 });
+}
 
 // increase time after game has started
 deck.addEventListener("click", event => {
