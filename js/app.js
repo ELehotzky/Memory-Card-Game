@@ -5,6 +5,10 @@ let time = 0;
 let clockStart = false;
 const clock = document.querySelector(".clock");
 let gameClock;
+let totalStars = 3;
+const stars = document.querySelector(".stars");
+let star1 = stars.firstElementChild;
+let star2 = stars.lastElementChild;
 const deck = document.querySelector(".deck");
 const moveCounter = document.querySelector(".moves");
 const restart = document.getElementsByClassName("fa-repeat")[0];
@@ -42,6 +46,9 @@ function startGame() {
 	});
 	moves = 0;
 	time = 0;
+	totalStars = 3;
+	star1.style.display = "";
+	star2.style.display = "";
 	moveCounter.innerText = moves;
 
 	deck.innerHTML = cardHTML.join("");
@@ -125,21 +132,25 @@ function showTime() {
 }
 
 function stopTime() {
+	clockStart = false;
 	clearInterval(gameClock);
 }
 
 // remove stars if score exceeds certain number of moves
 function checkScore() {
-	const stars = document.querySelector(".stars");
-	const star1 = stars.firstElementChild;
-	const star2 = stars.lastElementChild;
 	let numMoves = parseInt(moveCounter.innerText);
 	console.log(numMoves)
 	if (numMoves > 14 && numMoves < 25) {
+		totalStars = 2;
 		star1.style.display = "none";
 	} else if (numMoves > 25) {
+		totalStars = 1;
 		star1.style.display = "none";
 		star2.style.display = "none";
+	} else {
+		totalStars = 3;
+		star1.style.display = "";
+		star2.style.display = "";
 	}
 }
 
