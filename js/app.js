@@ -50,7 +50,7 @@ function startGame() {
 	star1.style.display = "";
 	star2.style.display = "";
 	moveCounter.innerText = moves;
-
+	showTime();
 	deck.innerHTML = cardHTML.join("");
 }
 
@@ -59,7 +59,6 @@ startGame();
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
-
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -67,10 +66,10 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
+// not sure why the game only works if this var is NOT listed at the top
 const allCards = document.querySelectorAll(".card");
 
 allCards.forEach(function(card) {
