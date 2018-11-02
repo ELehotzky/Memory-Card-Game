@@ -1,6 +1,11 @@
 console.log("DOM loaded");
 let openCards = [];
 let moves = 0;
+let time = 0;
+let clockStart = false;
+const clock = document.querySelector(".clock");
+let gameClock;
+const deck = document.querySelector(".deck");
 const moveCounter = document.querySelector(".moves");
 const restart = document.getElementsByClassName("fa-repeat")[0];
 const cards = [
@@ -36,6 +41,7 @@ function startGame() {
 		return makeCard(card);
 	});
 	moves = 0;
+	time = 0;
 	moveCounter.innerText = moves;
 
 	deck.innerHTML = cardHTML.join("");
@@ -84,12 +90,61 @@ allCards.forEach(function(card) {
 				}
 				moves += 1;
 				moveCounter.innerText = moves;
+				checkScore();
 			}
 		}}
 	});
 });
 
+// increase time after game has started
+deck.addEventListener("click", event => {
+	const clicked = event.target;
+		if (!clockStart) {
+			timer();
+			clockStart = true;
+		}
+})
+
+function timer() {
+	time = 0;
+	gameClock = setInterval(() => {
+		time++;
+		showTime();
+	}, 1000)
+}
+
+// show current time
+function showTime() {
+	let minutes = Math.floor(time / 60);
+	let seconds = time % 60;
+	if (seconds < 10) {
+		clock.innerHTML = `${minutes}:0${seconds}`;
+	} else {
+		clock.innerHTML = `${minutes}:${seconds}`;
+	}
+}
+
+function stopTime() {
+	clearInterval(gameClock);
+}
+
+// remove stars if score exceeds certain number of moves
+function checkScore() {
+	const stars = document.querySelector(".stars");
+	const star1 = stars.firstElementChild;
+	const star2 = stars.lastElementChild;
+	let numMoves = parseInt(moveCounter.innerText);
+	console.log(numMoves)
+	if (numMoves > 14 && numMoves < 25) {
+		star1.style.display = "none";
+	} else if (numMoves > 25) {
+		star1.style.display = "none";
+		star2.style.display = "none";
+	}
+}
+
 //restart button restarts game
 restart.addEventListener("click", () => {
+	stopTime();
 	startGame();
 })
