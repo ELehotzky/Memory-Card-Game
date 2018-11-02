@@ -12,6 +12,7 @@ let star2 = stars.lastElementChild;
 const deck = document.querySelector(".deck");
 const moveCounter = document.querySelector(".moves");
 const restart = document.getElementsByClassName("fa-repeat")[0];
+const closeBtn = document.getElementsByClassName("close-banner")[0];
 const cards = [
 	"fa-diamond", "fa-diamond",
 	"fa-paper-plane-o", "fa-paper-plane-o",
@@ -22,6 +23,7 @@ const cards = [
 	"fa-bomb", "fa-bomb",
 	"fa-bicycle", "fa-bicycle"
 ];
+let matchedPairs = 0;
 
 function makeCard(card) {
 	return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
@@ -85,6 +87,8 @@ function dealCards() {
 						openCards[0].classList.add("open", "show", "match");
 						openCards[1].classList.add("open", "show", "match");
 						openCards = [];
+						matchedPairs += 1;
+						winner();
 					} else {
 						// if cards don't match, flip cards back over
 						setTimeout(function() {
@@ -92,7 +96,7 @@ function dealCards() {
 								card.classList.remove("open", "show");
 							});
 							openCards = [];
-						}, 1000);
+						}, 100);
 					}
 					moves += 1;
 					moveCounter.innerText = moves;
@@ -158,3 +162,33 @@ restart.addEventListener("click", () => {
 	stopTime();
 	startGame();
 })
+
+function winner() {
+	if (matchedPairs == 8) {
+		finalBanner();
+	}
+}
+
+function finalBanner() {
+	console.log("winner!")
+	stopTime();
+	const finalTime = document.getElementsByClassName("final-time")[0];
+	const finalMoves = document.getElementsByClassName("final-moves")[0];
+	const finalStars = document.getElementsByClassName("final-stars")[0];
+	finalTime.innerHTML = `Your Time: ${clock.innerHTML}`
+	finalMoves.innerHTML = `Total Moves: ${moves + 1}`
+	finalStars.innerHTML = `Star Score: ${totalStars}`
+	closeBanner();
+}
+
+// closes the winner's banner
+function closeBanner() {
+	const banner = document.getElementsByClassName("winner-flag")[0];
+	banner.classList.toggle("close");
+	clockStart = false;
+}
+
+closeBtn.addEventListener("click", () => {
+	closeBanner();
+})
+
