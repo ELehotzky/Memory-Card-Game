@@ -1,4 +1,4 @@
-console.log("DOM loaded");
+// console.log("DOM loaded");
 let openCards = [];
 let moves = 0;
 let time = 0;
@@ -70,40 +70,37 @@ function shuffle(array) {
     return array;
 }
 
-// not sure why the game only works if this var is NOT listed at the top
-const allCards = document.querySelectorAll(".card");
-
 function dealCards() {
 	const allCards = document.querySelectorAll(".card");
-allCards.forEach(function(card) {
-	card.addEventListener("click", () => {
-		// only allows two cards to be opened at a time
-		if (openCards.length < 2) {
-			if (!card.classList.contains("open") && !card.classList.contains("show") && !card.classList.contains("match")) {
-			openCards.push(card);
-			card.classList.add("open", "show");
-			if (openCards.length == 2) {
-				// check for match, if matches leave shown
-				if (openCards[0].dataset.card == openCards[1].dataset.card) {
-					openCards[0].classList.add("open", "show", "match");
-					openCards[1].classList.add("open", "show", "match");
-					openCards = [];
-				} else {
-					// if cards don't match, flip cards back over
-					setTimeout(function() {
-						openCards.forEach(function(card) {
-							card.classList.remove("open", "show");
-						});
+	allCards.forEach(function(card) {
+		card.addEventListener("click", () => {
+			// only allows two cards to be opened at a time
+			if (openCards.length < 2) {
+				if (!card.classList.contains("open") && !card.classList.contains("show") && !card.classList.contains("match")) {
+				openCards.push(card);
+				card.classList.add("open", "show");
+				if (openCards.length == 2) {
+					// check for match, if matches leave shown
+					if (openCards[0].dataset.card == openCards[1].dataset.card) {
+						openCards[0].classList.add("open", "show", "match");
+						openCards[1].classList.add("open", "show", "match");
 						openCards = [];
-					}, 1000);
+					} else {
+						// if cards don't match, flip cards back over
+						setTimeout(function() {
+							openCards.forEach(function(card) {
+								card.classList.remove("open", "show");
+							});
+							openCards = [];
+						}, 1000);
+					}
+					moves += 1;
+					moveCounter.innerText = moves;
+					checkScore();
 				}
-				moves += 1;
-				moveCounter.innerText = moves;
-				checkScore();
-			}
-		}}
+			}}
+		});
 	});
-});
 }
 
 // increase time after game has started
@@ -142,7 +139,6 @@ function stopTime() {
 // remove stars if score exceeds certain number of moves
 function checkScore() {
 	let numMoves = parseInt(moveCounter.innerText);
-	console.log(numMoves)
 	if (numMoves > 14 && numMoves < 25) {
 		totalStars = 2;
 		star1.style.display = "none";

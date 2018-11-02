@@ -114,3 +114,48 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+/*
+    Styles for winner/game complete banner
+*/
+
+.winner-flag {
+    position: absolute;
+    height: 100%;
+}
+
+.winner-banner {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    height: 200px;
+    width: 400px;
+    background: #E8E288;
+    transform: translate(-50%, -70%);
+}
+
+.specs {
+    text-align: center;
+    height: 50%;
+}
+
+.close-banner {
+    font-weight: bold;
+    font-size: 20px;
+    float: right;
+}
+
+
+
+/*
+            <div class="winner-flag">
+                <div class="winner-banner">
+                    <span class="close-banner">X</span>
+                    <div class="banner content">
+                        <h2 class="winner-header">Congratulations! You Won!</h2>
+                        <h4 class="specs">Your Time: </h4>
+                        <h4 class="specs">Total Moves: </h4>
+                        <h4 class="specs">Star Score: </h4>
+                    </div>
+                </div>
+            </div>*/
