@@ -1,6 +1,5 @@
 // console.log("DOM loaded");
 let openCards = [];
-let moves = 0;
 let time = 0;
 let clockStart = false;
 const clock = document.querySelector(".clock");
@@ -13,16 +12,18 @@ const deck = document.querySelector(".deck");
 const moveCounter = document.querySelector(".moves");
 const restart = document.getElementsByClassName("fa-repeat")[0];
 const closeBtn = document.getElementsByClassName("close-banner")[0];
-const cards = [
-	"fa-diamond", "fa-diamond",
-	"fa-paper-plane-o", "fa-paper-plane-o",
-	"fa-anchor", "fa-anchor",
-	"fa-bolt", "fa-bolt",
-	"fa-cube", "fa-cube",
-	"fa-leaf", "fa-leaf",
-	"fa-bomb", "fa-bomb",
-	"fa-bicycle", "fa-bicycle"
+let card_array = [
+	"fa-diamond",
+	"fa-heart",
+	"fa-paw",
+	"fa-bolt",
+	"fa-bug",
+	"fa-cloud",
+	"fa-star-o",
+	"fa-tree"
 ];
+card_array = [...card_array] 
+const cards = card_array.concat(card_array)
 let matchedPairs = 0;
 
 function makeCard(card) {
@@ -46,7 +47,7 @@ function startGame() {
 	let cardHTML = shuffle(cards).map(function(card) {
 		return makeCard(card);
 	});
-	moves = 0;
+	let moves = 0;
 	time = 0;
 	totalStars = 3;
 	star1.style.display = "";
@@ -74,6 +75,7 @@ function shuffle(array) {
 
 function dealCards() {
 	const allCards = document.querySelectorAll(".card");
+	moves = 0;
 	allCards.forEach(function(card) {
 		card.addEventListener("click", () => {
 			// only allows two cards to be opened at a time
@@ -146,7 +148,7 @@ function checkScore() {
 	if (numMoves > 14 && numMoves < 25) {
 		totalStars = 2;
 		star1.style.display = "none";
-	} else if (numMoves > 25) {
+	} else if (numMoves >= 25) {
 		totalStars = 1;
 		star1.style.display = "none";
 		star2.style.display = "none";
