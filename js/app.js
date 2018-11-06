@@ -1,4 +1,3 @@
-// console.log("DOM loaded");
 let openCards = [];
 let time = 0;
 let clockStart = false;
@@ -85,7 +84,6 @@ function dealCards() {
 			if (!clockStart) {
 				timer();
 				clockStart = true;
-				console.log("time on")
 		}
 			// only allows two cards to be opened at a time
 			if (openCards.length < 2) {
@@ -99,7 +97,6 @@ function dealCards() {
 						openCards[1].classList.add("open", "show", "match");
 						openCards = [];
 						matchedPairs += 1;
-						console.log("checking for winner")
 						winner();
 					} else {
 						// if cards don't match, flip cards back over
@@ -108,7 +105,7 @@ function dealCards() {
 								card.classList.remove("open", "show");
 							});
 							openCards = [];
-						}, 100);
+						}, 1000);
 					}
 					moves += 1;
 					moveCounter.innerText = moves;
@@ -118,16 +115,6 @@ function dealCards() {
 		});
 	});
 }
-
-// // increase time after game has started
-// deck.addEventListener("click", event => {
-// 	// const clicked = event.target;
-// 		if (!clockStart) {
-// 			timer();
-// 			clockStart = true;
-// 			console.log("time on")
-// 		}
-// })
 
 function timer() {
 	time = 0;
@@ -149,7 +136,6 @@ function showTime() {
 }
 
 function stopTime() {
-	console.log("time turned off")
 	clockStart = false;
 	clearInterval(gameClock);
 }
@@ -187,7 +173,6 @@ function winner() {
 }
 
 function finalBanner() {
-	// console.log("winner!")
 	const finalTime = document.getElementsByClassName("final-time")[0];
 	const finalMoves = document.getElementsByClassName("final-moves")[0];
 	const finalStars = document.getElementsByClassName("final-stars")[0];
@@ -199,13 +184,11 @@ function finalBanner() {
 
 // closes the winner's banner
 function removeBanner() {
-	// console.log("remove banner")
 	const banner = document.getElementsByClassName("winner-flag")[0];
 	banner.classList.add("close");
 }
 
 function addBanner() {
-	// console.log("remove banner")
 	const banner = document.getElementsByClassName("winner-flag")[0];
 	banner.classList.remove("close");
 }
