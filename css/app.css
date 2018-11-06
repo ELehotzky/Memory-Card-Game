@@ -129,7 +129,7 @@ h1 {
     z-index: 99;
     top: 50%;
     left: 50%;
-    height: 200px;
+    height: 250px;
     width: 400px;
     background: #E8E288;
     transform: translate(-50%, -70%);
@@ -141,8 +141,6 @@ h1 {
 }
 
 .close-banner {
-    font-weight: bold;
-    font-size: 20px;
     float: right;
 }
 
