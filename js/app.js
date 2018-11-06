@@ -80,6 +80,13 @@ function dealCards() {
 	moves = 0;
 	allCards.forEach(function(card) {
 		card.addEventListener("click", () => {
+
+			// start the clock
+			if (!clockStart) {
+				timer();
+				clockStart = true;
+				console.log("time on")
+		}
 			// only allows two cards to be opened at a time
 			if (openCards.length < 2) {
 				if (!card.classList.contains("open") && !card.classList.contains("show") && !card.classList.contains("match")) {
@@ -112,14 +119,15 @@ function dealCards() {
 	});
 }
 
-// increase time after game has started
-deck.addEventListener("click", event => {
-	const clicked = event.target;
-		if (!clockStart) {
-			timer();
-			clockStart = true;
-		}
-})
+// // increase time after game has started
+// deck.addEventListener("click", event => {
+// 	// const clicked = event.target;
+// 		if (!clockStart) {
+// 			timer();
+// 			clockStart = true;
+// 			console.log("time on")
+// 		}
+// })
 
 function timer() {
 	time = 0;
@@ -141,6 +149,7 @@ function showTime() {
 }
 
 function stopTime() {
+	console.log("time turned off")
 	clockStart = false;
 	clearInterval(gameClock);
 }
@@ -178,8 +187,7 @@ function winner() {
 }
 
 function finalBanner() {
-	console.log("winner!")
-	stopTime();
+	// console.log("winner!")
 	const finalTime = document.getElementsByClassName("final-time")[0];
 	const finalMoves = document.getElementsByClassName("final-moves")[0];
 	const finalStars = document.getElementsByClassName("final-stars")[0];
@@ -191,13 +199,13 @@ function finalBanner() {
 
 // closes the winner's banner
 function removeBanner() {
-	console.log("remove banner")
+	// console.log("remove banner")
 	const banner = document.getElementsByClassName("winner-flag")[0];
 	banner.classList.add("close");
 }
 
 function addBanner() {
-	console.log("remove banner")
+	// console.log("remove banner")
 	const banner = document.getElementsByClassName("winner-flag")[0];
 	banner.classList.remove("close");
 }
